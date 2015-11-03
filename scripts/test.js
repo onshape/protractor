@@ -46,7 +46,8 @@ passingTests.push(
     'node lib/cli.js plugins/timeline/spec/conf.js',
     'node lib/cli.js plugins/ngHint/spec/successConfig.js',
     'node lib/cli.js plugins/accessibility/spec/successConfig.js',
-    'node lib/cli.js plugins/console/spec/consolePassConfig.js'
+    'node lib/cli.js plugins/console/spec/consolePassConfig.js',
+    'node lib/cli.js plugins/console/spec/consolePassLogWarnings.js'
 );
 
 var executor = new Executor();
@@ -129,6 +130,14 @@ executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutCo
                 '*}'}
     ]);
 
+executor.addCommandlineTest('node lib/cli.js spec/errorTest/slowHttpAndTimeoutConf.js ' +
+                            '--untrackOutstandingTimeouts true')
+    .expectExitCode(1)
+    .expectErrors([
+      {message: 'The following tasks were pending[\\s\\S]*\\$http: \/slowcall'},
+      {message: '^((?!The following tasks were pending).)*$'}
+    ]);
+
 // Check ngHint plugin
 
 executor.addCommandlineTest(
@@ -189,6 +198,13 @@ executor.addCommandlineTest(
   .expectExitCode(1)
   .expectErrors([
     {message: 'This is a test error'}
+  ]);
+
+executor.addCommandlineTest(
+  'node lib/cli.js plugins/console/spec/consoleFailLogWarnings.js')
+  .expectExitCode(1)
+  .expectErrors([
+    {message: 'This is a test warning'}
   ]);
 
 executor.execute();

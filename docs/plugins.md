@@ -17,6 +17,7 @@ The `plugins` folder contains default plugins for Protractor.
   * [ngHint Plugin](/docs/plugins.md#nghint-plugin)
   * [Timeline Plugin](/docs/plugins.md#timeline-plugin)
   * [Console Plugin](/docs/plugins.md#console-plugin-chrome-only)
+* [Community Plugins](/docs/plugins.md#community-plugins)
 
 Using Plugins
 -------------
@@ -408,14 +409,15 @@ This plugin checks the browser log after each test for warnings and errors.  It
 can be configured to fail a test if either is detected.  There is also an
 optional exclude parameter which accepts both regex and strings.  Any log
 matching the exclude parameter will not fail the test or be logged to the
-console.
+console. A false setting to logWarnings also overrides the failOnWarning setting.
 
 ```js
 exports.config = {
   plugins: [{
     path: 'node_modules/protractor/plugins/console',
     failOnWarning: {Boolean}                (Default - false),
-    failOnError: {Boolean}                  (Default - true)
+    failOnError: {Boolean}                  (Default - true),
+    logWarnings: {Boolean}                  (Default - true),
     exclude: {Array of strings and regex}   (Default - [])
   }]
 };
@@ -423,3 +425,10 @@ exports.config = {
 
 Note that this plugin's behavior is undefined on browsers other than Chrome.
 Firefox users have reported flaky results.
+
+Community Plugins
+-----------------
+
+This list is here for reference and the plugins included are not developed or mantained by protractor's team by any means. If you find any issues with this plugins please report them to the corresponding plugin developer.
+
+* [Protractor testability plugin](https://github.com/alfonso-presa/protractor-testability-plugin): this plugins enables synchronous testing with protractor for features that are not developed using the services provided by AngularJS, preventing the need of additional waits coded in the tests. This happens for example if you have WebSockets communication with the server or for web applications built with frameworks different than AngularJS.

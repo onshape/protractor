@@ -234,7 +234,7 @@ exports.config = {
   // and can be accessed from your test as browser.params. It is an arbitrary
   // object and can contain anything you may need in your test.
   // This can be changed via the command line as:
-  //   --params.login.user 'Joe'
+  //   --params.login.user "Joe"
   params: {
     login: {
       user: 'Jane',
@@ -249,6 +249,13 @@ exports.config = {
   // If true, protractor will restart the browser between each test.
   // CAUTION: This will cause your tests to slow down drastically.
   restartBrowserBetweenTests: false,
+
+  // Protractor will track outstanding $timeouts by default, and report them in 
+  // the error message if Protractor fails to synchronize with Angular in time. 
+  // In order to do this Protractor needs to decorate $timeout. 
+  // CAUTION: If your app decorates $timeout, you must turn on this flag. This 
+  // is false by default.
+  untrackOutstandingTimeouts: false,
 
   // ---------------------------------------------------------------------------
   // ----- The test framework --------------------------------------------------
